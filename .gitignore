@@ -1,0 +1,5 @@
+__pycache__
+*.log
+hsec-alert/comms
+hsec-alert/comms/*
+hsec-alert/hsec-alert.cfg
