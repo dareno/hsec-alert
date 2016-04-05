@@ -15,11 +15,11 @@ def main():
 
     # get key for ifttt maker recipe
     config = configparser.ConfigParser()
-    config.read('actor.cfg')
+    config.read('hsec-alert.cfg')
     key=config['maker.ifttt.com']['Key']
 
     # create object for communication to sensor system
-    comm_channel = comms.SubChannel("tcp://localhost:5563", ['events','state'])
+    comm_channel = comms.SubChannel("tcp://localhost:5564", ['state'])
 
     try:
         while True:
@@ -27,18 +27,19 @@ def main():
             rv = comm_channel.get()
             if rv is not None:
                 [address, contents] = rv
-                print("[%s] %s" % (address, contents))
+                print("state: [%s] %s" % (address, contents))
                 post = "https://maker.ifttt.com/trigger/front_door_opened/with/key/" + key
                 print("not really..." + post)
                 #print(requests.post(post))
             else:
                 time.sleep(0.1)
-            print("doing stuff")
-            time.sleep(1)
+            #print("doing stuff")
+            #time.sleep(1)
             # trigger an event
 
     except KeyboardInterrupt:
-        q.join(timeout=1)
+        pass
+        #q.join(timeout=1) 	# probably goes in comms class
 
     # clean up zmq connection
     subscriber.close()
