@@ -22,7 +22,7 @@ def iCloud_alert(account, device_name):
         if api.devices[k].data['name'] == device_name:
 
             # send an alert
-            api.devices[k].play_sound("door opened")
+            api.devices[k].play_sound("Door opened")
 
 
 def main():
