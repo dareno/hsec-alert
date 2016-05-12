@@ -36,7 +36,7 @@ def main():
     appleAlertDevice  = config['Apple.alert.devices']['Device']
 
     # create object for communication to state system
-    state_channel = comms.SubChannel("tcp://localhost:5564", ['state'])
+    state_channel = comms.SubChannel("tcp://localhost:5564", ['alarm'])
 
     try:
         while True:
@@ -44,16 +44,17 @@ def main():
             rv = state_channel.get()
             if rv is not None:
                 [address, contents] = rv
-                print("State: [%s] %s" % (address, contents))
-                post = "https://maker.ifttt.com/trigger/front_door_opened/with/key/" + key
-                print("not really..." + post)
-                iCloud_alert( appleAlertAccount, appleAlertDevice)
+                print("message: [%s, %s]" % (address, contents))
+                #post = "https://maker.ifttt.com/trigger/front_door_opened/with/key/" + key
+                #print("not really..." + post)
+                #iCloud_alert( appleAlertAccount, appleAlertDevice)
                 #print(requests.post(post))
             else:
                 time.sleep(0.1)
 
     except KeyboardInterrupt:
-        pass
+        # call cleanup actions
+        state_channel.close()
 
 
 if __name__ == "__main__":
