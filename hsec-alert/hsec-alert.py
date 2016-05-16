@@ -31,9 +31,9 @@ def main():
     # get key for ifttt maker recipe
     config = configparser.ConfigParser()
     config.read('hsec-alert.cfg')
-    key=config['maker.ifttt.com']['Key']
-    appleAlertAccount = config['Apple.alert.devices']['Account']
-    appleAlertDevice  = config['Apple.alert.devices']['Device']
+    #key=config['maker.ifttt.com']['Key']
+    #appleAlertAccount = config['Apple.alert.devices']['Account']
+    #appleAlertDevice  = config['Apple.alert.devices']['Device']
 
     # create object for communication to state system
     state_channel = comms.SubChannel("tcp://localhost:5564", ['alarm'])
