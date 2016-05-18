@@ -5,7 +5,7 @@ Receive events and state changes. Alert interested parties.
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
 
 import requests             # for webhooks
-import configparser         # for reading config
+#import configparser         # for reading config
 import time                 # for sleeping
 import comms.comms as comms # for getting a channel to the sensor
 from pyicloud import PyiCloudService # for sending "find my iPhone alerts"
@@ -29,8 +29,8 @@ def main():
     """ main method """
 
     # get key for ifttt maker recipe
-    config = configparser.ConfigParser()
-    config.read('hsec-alert.cfg')
+    #config = configparser.ConfigParser()
+    #config.read('hsec-alert.cfg')
     #key=config['maker.ifttt.com']['Key']
     #appleAlertAccount = config['Apple.alert.devices']['Account']
     #appleAlertDevice  = config['Apple.alert.devices']['Device']
