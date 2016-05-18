@@ -9,9 +9,10 @@ import requests             # for webhooks
 import time                 # for sleeping
 import comms.comms as comms # for getting a channel to the sensor
 from pyicloud import PyiCloudService # for sending "find my iPhone alerts"
+import os                   # for reading OS ENV vars
 
 
-def iCloud_alert(account, device_name):
+def old_iCloud_alert(account, device_name):
 
     api=PyiCloudService(account) # password already saved via icloud cmdline
 
@@ -24,6 +25,14 @@ def iCloud_alert(account, device_name):
             # send an alert
             api.devices[k].play_sound("Door opened")
 
+def iCloud_alert(account,device_id_list):
+ print("starting iCloud_alert(%s,%s)" % (account,device_id_list))
+ api=PyiCloudService(account)
+ for k,v in api.devices.items():
+  print(" loop iteration")
+  if k in device_id_list:
+   print("  match on %s" % k)
+   api.devices[k].play_sound("test message")
 
 def main():
     """ main method """
@@ -45,9 +54,11 @@ def main():
             if rv is not None:
                 [address, contents] = rv
                 print("message: [%s, %s]" % (address, contents))
+                iCloud_alert( \
+                    os.environ["ICLOUD_ALERT_ACCOUNT"], \
+                    os.environ["ICLOUD_ALERT_DEVICE_ID_LIST"])
                 #post = "https://maker.ifttt.com/trigger/front_door_opened/with/key/" + key
                 #print("not really..." + post)
-                #iCloud_alert( appleAlertAccount, appleAlertDevice)
                 #print(requests.post(post))
             else:
                 time.sleep(0.1)
