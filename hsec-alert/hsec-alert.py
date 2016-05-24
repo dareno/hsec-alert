@@ -45,7 +45,7 @@ def main():
     #appleAlertDevice  = config['Apple.alert.devices']['Device']
 
     # create object for communication to state system
-    state_channel = comms.SubChannel("tcp://localhost:5564", ['alarm'])
+    state_channel = comms.SubChannel("tcp://state1:5564", ['alarm'])
 
     try:
         while True:
