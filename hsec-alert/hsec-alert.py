@@ -44,6 +44,8 @@ def main():
     #appleAlertAccount = config['Apple.alert.devices']['Account']
     #appleAlertDevice  = config['Apple.alert.devices']['Device']
 
+    print("Starting alert process...")
+
     # create object for communication to state system
     state_channel = comms.SubChannel("tcp://state1:5564", ['alarm'])
 
