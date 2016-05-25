@@ -12,7 +12,7 @@ from pyicloud import PyiCloudService # for sending "find my iPhone alerts"
 import os                   # for reading OS ENV vars
 
 
-def old_iCloud_alert(account, device_name):
+def old_iCloud_alert(account, device_name, contents):
 
     api=PyiCloudService(account) # password already saved via icloud cmdline
 
@@ -23,16 +23,17 @@ def old_iCloud_alert(account, device_name):
         if api.devices[k].data['name'] == device_name:
 
             # send an alert
-            api.devices[k].play_sound("Door opened")
+            api.devices[k].play_sound(contents)
+            #api.devices[k].play_sound("Door opened")
 
-def iCloud_alert(account,device_id_list):
+def iCloud_alert(account,device_id_list, contents):
  print("starting iCloud_alert(%s,%s)" % (account,device_id_list))
  api=PyiCloudService(account)
  for k,v in api.devices.items():
   print(" loop iteration")
   if k in device_id_list:
    print("  match on %s" % k)
-   api.devices[k].play_sound("test message")
+   api.devices[k].play_sound(contents.decode('utf8'))
 
 def main():
     """ main method """
@@ -58,7 +59,8 @@ def main():
                 print("message: [%s, %s]" % (address, contents))
                 iCloud_alert( \
                     os.environ["ICLOUD_ALERT_ACCOUNT"], \
-                    os.environ["ICLOUD_ALERT_DEVICE_ID_LIST"])
+                    os.environ["ICLOUD_ALERT_DEVICE_ID_LIST"], \
+                    contents)
                 #post = "https://maker.ifttt.com/trigger/front_door_opened/with/key/" + key
                 #print("not really..." + post)
                 #print(requests.post(post))
