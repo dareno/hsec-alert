@@ -34,6 +34,8 @@ def iCloud_alert(account,device_id_list, contents):
   if k in device_id_list:
    print("  match on %s" % k)
    api.devices[k].play_sound(contents.decode('utf8'))
+  else:
+   print(" %s isn't in  %s" % (k, device_id_list))
 
 def main():
     """ main method """
